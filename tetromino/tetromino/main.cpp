@@ -51,6 +51,12 @@ int main(int argc, const char * argv[]) {
             temp = arr[i+1][j] + arr[i+1][j+1] + arr[i+1][j+2] + arr[i][j+2];
             if(max < temp)
                 max = temp;
+            temp = arr[i][j] + arr[i][j+1] + arr[i][j+2] + arr[i+1][j+2];
+            if(max < temp)
+                max = temp;
+            temp = arr[i][j] + arr[i][j+1] + arr[i][j+2] + arr[i+1][j];
+            if(max < temp)
+                max = temp;
         }
     }
     for(int i = 0; i < n - 2; i++){
@@ -71,6 +77,12 @@ int main(int argc, const char * argv[]) {
             if(max < temp)
                 max = temp;
             temp = arr[i][j] + arr[i][j+1] + arr[i+1][j+1] + arr[i+2][j+1];
+            if(max < temp)
+                max = temp;
+            temp = arr[i][j+1] + arr[i+1][j+1] + arr[i+2][j+1] + arr[i+2][j];
+            if(max < temp)
+                max = temp;
+            temp = arr[i][j] + arr[i+1][j] + arr[i+2][j] + arr[i+2][j+1];
             if(max < temp)
                 max = temp;
         }
