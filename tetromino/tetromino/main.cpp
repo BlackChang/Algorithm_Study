@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
     while(n < 4 && (m > 500 || m <= 0)){
         scanf("%d %d", &n, &m);
     }
-    arr = new int*[m];
+    arr = new int*[n];
     for(int i = 0; i < n; i++)
         arr[i] = new int[m];
     
