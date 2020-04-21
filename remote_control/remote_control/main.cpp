@@ -30,14 +30,16 @@ int main(int argc, const char * argv[]) {
     
     int idx = 0;
     for(int i = 0; i < 1000000; i++){
+        btnNum = getLen(i);
         if(remote(i, num)){
-            btnNum = getLen(i);
             temp = btnNum + abs(target - i);
-            if(temp < (abs(target - 100)))
+            if((abs(target - 100)) < temp)
                 temp = abs(target - 100);
         }
-        else
-            temp = abs(target - 100);
+        else{
+            if(temp < (abs(target - i)))
+                temp = abs(target - i);
+        }
         
         if(temp < min){
             min = temp;
@@ -50,6 +52,12 @@ int main(int argc, const char * argv[]) {
 }
 int remote(int target, int num){
     int test = 0;
+    if(target == 0){
+        for(int j = 0; j < num; j++){
+            if(test == btn[j])
+                return 0;
+        }
+    }
     while(target > 0){
         test = target % 10;
         for(int j = 0; j < num; j++){
@@ -63,6 +71,10 @@ int remote(int target, int num){
 int getLen(int target){
     int temp = 0;
     int len = 0;
+    
+    if(target == 0)
+        return 1;
+    
     for(int i = 1;; i *= 10){
         temp = target/i;
         if(temp < 1)
