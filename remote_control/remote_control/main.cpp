@@ -18,8 +18,6 @@ int getLen(int);
 int main(int argc, const char * argv[]) {
     int target = 0;
     int tmpLen = 0;
-    int tmp1 = 0;
-    int tmp2 = 0;
     int temp = 0;
     int min = 500001;
     
@@ -30,24 +28,21 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < num; i++)
         scanf("%d", &btn[i]);
     
-    
+    int idx = 0;
     for(int i = 0; i < 1000000; i++){
         if(remote(i)){
             tmpLen = getLen(i);
-            tmp1 = tmpLen + abs(target - i);
-            tmp2 = abs(target - i);
-            if(tmp1 > tmp2)
-                temp = tmp2;
-            else
-                temp = tmp1;
+            temp = tmpLen + abs(target - i);
         }
         else
-            temp = abs(100 - i);
+            temp = abs(target - 100);
         
-        if(temp < min)
+        if(temp < min){
             min = temp;
+            idx = i;
+        }
     }
-    printf("%d\n", min);
+    printf("%d %d\n", min, idx);
     
     return 0;
 }
