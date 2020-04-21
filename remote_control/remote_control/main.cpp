@@ -10,15 +10,15 @@
 #include <algorithm>
 #include <cstdio>
 
-int num = 0;
 int* btn;
 int isIn(int);
-int remote(int);
+int remote(int, int);
 int getLen(int);
 int main(int argc, const char * argv[]) {
     int target = 0;
-    int tmpLen = 0;
+    int num = 0;
     int temp = 0;
+    int btnNum= 0;
     int min = 500001;
     
     scanf("%d", &target);
@@ -30,9 +30,11 @@ int main(int argc, const char * argv[]) {
     
     int idx = 0;
     for(int i = 0; i < 1000000; i++){
-        if(remote(i)){
-            tmpLen = getLen(i);
-            temp = tmpLen + abs(target - i);
+        if(remote(i, num)){
+            btnNum = getLen(i);
+            temp = btnNum + abs(target - i);
+            if(temp < (abs(target - 100)))
+                temp = abs(target - 100);
         }
         else
             temp = abs(target - 100);
@@ -46,7 +48,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-int remote(int target){
+int remote(int target, int num){
     int test = 0;
     while(target > 0){
         test = target % 10;
