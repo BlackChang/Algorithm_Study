@@ -17,7 +17,7 @@ int getLen(int);
 int main(int argc, const char * argv[]) {
     int target = 0;
     int num = 0;
-    int temp = 0;
+    int temp = 500002;
     int btnNum= 0;
     int min = 500001;
     
@@ -28,26 +28,17 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < num; i++)
         scanf("%d", &btn[i]);
     
-    int idx = 0;
+    min = abs(target - 100);
     for(int i = 0; i < 1000000; i++){
-        btnNum = getLen(i);
         if(remote(i, num)){
+            btnNum = getLen(i);
             temp = btnNum + abs(target - i);
-            if((abs(target - 100)) < temp)
-                temp = abs(target - 100);
         }
-        else{
-            if(temp < (abs(target - i)))
-                temp = abs(target - i);
-        }
-        
-        if(temp < min){
+        if(temp < min)
             min = temp;
-            idx = i;
-        }
     }
-    printf("%d %d\n", min, idx);
-    
+    printf("%d\n", min);
+
     return 0;
 }
 int remote(int target, int num){
@@ -72,14 +63,11 @@ int getLen(int target){
     int temp = 0;
     int len = 0;
     
-    if(target == 0)
-        return 1;
-    
-    for(int i = 1;; i *= 10){
+    for(int i = 10;; i *= 10){
         temp = target/i;
+        len += 1;
         if(temp < 1)
             break;
-        len += 1;
     }
 
     return len;
