@@ -56,10 +56,8 @@ void makeSequence(int num){
     }
     else{
         for(int i = 0; i < n; i++){
-            //            if(arr[num - 1] <= list[i]){
-            arr[num] = list[i];
-            makeSequence(num + 1);
-            //            }
+                arr[num] = list[i];
+                makeSequence(num + 1);
         }
     }
 }
