@@ -29,14 +29,15 @@ int main(int argc, const char * argv[]) {
 }
 void makeSequence(int num){
     if(num == m){
-        for(int i = 0; i < m; i++){
+        for(int i = 0; i < m; i++)
             printf("%d ", arr[i]);
-        }
         printf("\n");
     }
-    for(int i = 1; i <= n; i++){
-        arr[num] = i;
-        makeSequence(num + 1);
-        arr[num] = 0;
+    else{
+        for(int i = 1; i <= n; i++){
+            arr[num] = i;
+            makeSequence(num + 1);
+            //        arr[num] = 0;
+        }
     }
 }
