@@ -12,44 +12,49 @@
 int n = 0;
 int m = 0;
 int* arr;
+int check[9];
 void makeSequence(int);
-int checkValid(int, int);
 int main(int argc, const char * argv[]) {
     scanf("%d %d", &n, &m);
     arr = new int[m];
-
+    
     for(int i = 0; i < m; i++)
         arr[i] = 0;
-
-//    for(int i = 0; i < n; i++)
-        makeSequence(0);
-
+    
+    for(int i = 0; i < 9; i++)
+        check[i] = 0;
+    
+    makeSequence(0);
+    
     return 0;
 }
 void makeSequence(int num){
-    for(int i = 1; i < n + 1; i++){
-        if(checkValid(i, num)){
-            arr[num] = i;
-            makeSequence(num + 1);
+    if(num == m){
+        for(int i = 0; i < m; i++){
+            printf("%d ", arr[i]);
         }
+        printf("\n");
     }
-    num = 0;
-    for(int i = 0; i < m; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
-}
-int checkValid(int check, int num){
-    if(num == 0){
-        if(arr[0] != check)
-            return 1;
-        else
-            return 0;
+    else if(num == 0){
+        for(int i = 1; i <= n; i++){
+            if(check[i - 1] == 0){
+                arr[num] = i;
+                check[i - 1] = 1;
+                makeSequence(num + 1);
+                check[i - 1] = 0;
+                arr[num] = 0;
+            }
+        }
     }
     else{
-        for(int i = 0; i < num; i++){
-            if(arr[i] == check)
-                return 0;
+        for(int i = 1; i <= n; i++){
+            if((check[i - 1] == 0) && (arr[num - 1] < i)){
+                arr[num] = i;
+                check[i - 1] = 1;
+                makeSequence(num + 1);
+                check[i - 1] = 0;
+                arr[num] = 0;
+            }
         }
-        return 1;
     }
 }
