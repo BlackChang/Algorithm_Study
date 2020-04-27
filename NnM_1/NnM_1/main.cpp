@@ -12,19 +12,20 @@
 int n = 0;
 int m = 0;
 int* arr;
-int* check;
+int check[9];
 void makeSequence(int);
 int main(int argc, const char * argv[]) {
     scanf("%d %d", &n, &m);
     arr = new int[m];
-    check = new int[m];
     
-    for(int i = 0; i < m; i++){
+    for(int i = 0; i < m; i++)
         arr[i] = 0;
+    
+    for(int i = 0; i < 10; i++)
         check[i] = 0;
-    }
     
     makeSequence(0);
+    
     return 0;
 }
 void makeSequence(int num){
@@ -36,12 +37,12 @@ void makeSequence(int num){
     }
     
     for(int i = 1; i <= n; i++){
-        if(check[i] == 0){
+        if(check[i - 1] == 0){
             arr[num] = i;
-            check[i] = 1;
+            check[i - 1] = 1;
             makeSequence(num + 1);
             arr[num] = 0;
-            check[i] = 0;
+            check[i - 1] = 0;
         }
     }
 }
