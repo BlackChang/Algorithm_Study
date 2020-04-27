@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  NnM_11
+//  NnM_10
 //
 //  Created by 이원창 on 2020/04/28.
 //  Copyright © 2020 이원창. All rights reserved.
@@ -13,10 +13,15 @@
 
 int n = 0;
 int m = 0;
+int len = 0;
+int tmp = 0;
 int* arr;
 int* list;
-void makeSequence(int);
+int* check;
+int check_num[10000] = {0, };
 
+void makeSequence(int);
+int checkValid();
 using namespace std;
 set<vector<int>> ans;
 int main(int argc, const char * argv[]) {
@@ -24,12 +29,17 @@ int main(int argc, const char * argv[]) {
     
     arr = new int[m];
     list = new int[n];
+    check = new int[n];
     
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < n; i++){
         arr[i] = 0;
+        check[i] = 0;
+    }
     
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < n; i++){
         scanf("%d", &list[i]);
+        check[i] = 0;
+    }
     
     sort(list, list + n);
     
@@ -52,10 +62,25 @@ void makeSequence(int num){
         
         return ;
     }
+    else if(num == 0){
+        for(int i = 0; i < n; i++){
+            if(check[i] == 0){
+                arr[num] = list[i];
+                check[i] = 1;
+                makeSequence(num + 1);
+                check[i] = 0;
+            }
+        }
+        
+    }
     else{
         for(int i = 0; i < n; i++){
-            arr[num] = list[i];
-            makeSequence(num + 1);
+            if((check[i] == 0) && (arr[num - 1] <= list[i])){
+                arr[num] = list[i];
+                check[i] = 1;
+                makeSequence(num + 1);
+                check[i] = 0;
+            }
         }
     }
 }
