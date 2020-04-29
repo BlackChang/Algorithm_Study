@@ -1,6 +1,6 @@
 //
 //  main.cpp
-//  NnM_11
+//  NnM_12
 //
 //  Created by 이원창 on 2020/04/28.
 //  Copyright © 2020 이원창. All rights reserved.
@@ -52,13 +52,20 @@ void makeSequence(int num){
         
         return ;
     }
-    else{
+    else if(num == 0){
         for(int i = 0; i < n; i++){
             arr[num] = list[i];
             makeSequence(num + 1);
         }
     }
+    else{
+        for(int i = 0; i < n; i++){
+            if(arr[num - 1] <= list[i]){
+                arr[num] = list[i];
+                makeSequence(num + 1);
+            }
+        }
+    }
 }
-
 
 
