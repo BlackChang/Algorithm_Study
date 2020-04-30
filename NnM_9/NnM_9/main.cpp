@@ -21,7 +21,6 @@ int* check;
 int check_num[10000] = {0, };
 
 void makeSequence(int);
-int checkValid();
 using namespace std;
 set<vector<int>> ans;
 int main(int argc, const char * argv[]) {
