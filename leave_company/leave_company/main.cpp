@@ -36,10 +36,12 @@ int main(int argc, const char * argv[]) {
 }
 int calculateSalary(int num){
     int temp = t[num];
-    int sum = p[num];
-
+    int sum = 0;
+//    int tempSalary = 0;
+    
+    sum = p[num];
     if(num + temp < n){
-        sum += calculateSalary(num + temp);
+        sum += calculateSalary(num + 1);
         return sum;
     }
     else if(num + temp == n)
@@ -47,3 +49,4 @@ int calculateSalary(int num){
     else
         return 0;
 }
+
