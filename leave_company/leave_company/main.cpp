@@ -7,9 +7,43 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
+int n = 0;
+int* t;
+int* p;
+
+int calculateSalary(int);
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    int salary = 0;
+    int max = 0;
+    
+    scanf("%d", &n);
+    t = new int[n];
+    p = new int[n];
+    
+    for(int i = 0; i < n; i++)
+        scanf("%d %d", &t[i], &p[i]);
+    
+    for(int i = 0; i < n; i++){
+        salary = calculateSalary(i);
+        if(max < salary)
+            max = salary;
+    }
+    printf("%d\n", max);
+    
     return 0;
+}
+int calculateSalary(int num){
+    int temp = t[num];
+    int sum = p[num];
+
+    if(num + temp < n){
+        sum += calculateSalary(num + temp);
+        return sum;
+    }
+    else if(num + temp == n)
+        return sum;
+    else
+        return 0;
 }
