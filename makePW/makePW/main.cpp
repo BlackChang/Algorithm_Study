@@ -13,12 +13,11 @@
 
 int l = 0;
 int c = 0;
-int len = 0;
-int tmp = 0;
+int valid1 = 0;
+int valid2 = 0;
 char* arr;
 char* list;
 int* check;
-int check_num[10000] = {0, };
 
 void makePW(int);
 using namespace std;
@@ -44,9 +43,20 @@ int main(int argc, const char * argv[]) {
     
     makePW(0);
     for(auto temp : ans){
-        for(int i = 0; i < temp.size(); i++)
-            printf("%c", temp[i]);
-        printf("\n");
+        valid1 = 0;
+        valid2 = 0;
+        for(int i = 0; i < temp.size(); i++){
+            if((temp[i] == 'a') || (temp[i] == 'i') || (temp[i] == 'e') || (temp[i] == 'o') || (temp[i] == 'u')){
+                valid1 = 1;
+            }
+            else
+                valid2 += 1;
+        }
+        if((valid1 == 1) && (valid2 >= 2)){
+            for(int i = 0; i < temp.size(); i++)
+                printf("%c", temp[i]);
+            printf("\n");
+        }
     }
     return 0;
 }
