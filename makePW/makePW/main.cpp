@@ -45,7 +45,7 @@ int main(int argc, const char * argv[]) {
     makePW(0);
     for(auto temp : ans){
         for(int i = 0; i < temp.size(); i++)
-            printf("%c ", temp[i]);
+            printf("%c", temp[i]);
         printf("\n");
     }
     return 0;
