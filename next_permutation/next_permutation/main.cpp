@@ -19,7 +19,6 @@ int* check;
 int* org;
 void makeSequence(int);
 using namespace std;
-set<vector<int>> ans;
 int main(int argc, const char * argv[]) {
     scanf("%d", &n);
     
@@ -36,48 +35,50 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < n; i++){
         scanf("%d", &list[i]);
         org[i] = list[i];
-        check[i] = 0;
     }
     
     sort(list, list + n);
-    
     makeSequence(0);
-    for(auto temp : ans){
-        if(len == temp.size()){
-            for(int i = 0; i < temp.size(); i++)
-                printf("%d ", temp[i]);
-            printf("\n");
-            tmp = 1;
-        }
-        len = 0;
-        for(int i = 0; i < temp.size(); i++){
-            if(temp[i] == org[i])
-                len += 1;
-        }
-    }
+    
     if(tmp != 1)
         printf("-1\n");
     return 0;
 }
 void makeSequence(int num){
     if(num == n){
-        vector<int> temp;
-        
-        for(int i = 0; i < n; i++)
-            temp.push_back(arr[i]);
-        ans.insert(temp);
-        temp.clear();
+//        if(len == n){
+            for(int i = 0; i < n; i++)
+                printf("%d ", arr[i]);
+            printf("\n");
+            tmp = 1;
+//        }
+        len = 0;
+//        for(int i = 0; i < n; i++){
+//            if(arr[i] == org[i])
+//                len += 1;
+//        }
         
         return ;
     }
-    for(int i = 0; i < n; i++){
-        if(check[i] == 0){
-            arr[num] = list[i];
-            check[i] = 1;
-            makeSequence(num + 1);
-            check[i] = 0;
+    else if(num == 0){
+        for(int i = org[num] - 1; i < n; i++){
+            if(check[i] == 0){
+                arr[num] = list[i];
+                check[i] = 1;
+                makeSequence(num + 1);
+                check[i] = 0;
+            }
+        }
+    }
+    else{
+        for(int i = org[num] - 1; i < n; i++){
+            if(check[i] == 0){
+                arr[num] = list[i];
+                check[i] = 1;
+                makeSequence(num + 1);
+                check[i] = 0;
+            }
         }
     }
 }
-
 

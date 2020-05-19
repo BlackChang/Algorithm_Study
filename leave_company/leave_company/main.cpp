@@ -12,6 +12,7 @@
 int n = 0;
 int* t;
 int* p;
+int* check;
 
 int calculateSalary(int);
 int main(int argc, const char * argv[]) {
@@ -21,10 +22,12 @@ int main(int argc, const char * argv[]) {
     scanf("%d", &n);
     t = new int[n];
     p = new int[n];
+    check = new int[n];
     
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < n; i++){
         scanf("%d %d", &t[i], &p[i]);
-    
+        check[i] = 0;
+    }
     for(int i = 0; i < n; i++){
         salary = calculateSalary(i);
         if(max < salary)
@@ -35,17 +38,23 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 int calculateSalary(int num){
-    int temp = t[num];
-    int sum = 0;
-//    int tempSalary = 0;
+    int pay = 0;
+    int next = num + t[num];
+    pay = p[num];
     
-    sum = p[num];
-    if(num + temp < n){
-        sum += calculateSalary(num + 1);
-        return sum;
+    for(int i = 0; i < n; i++){
+        if(check[i] == 0){
+            check[i] = 1;
+            pay += calculateSalary(num + i);
+        }
     }
-    else if(num + temp == n)
-        return sum;
+    
+    if(next < n){
+        pay += calculateSalary(num + 1);
+        return pay;
+    }
+    else if(next == n)
+        return pay;
     else
         return 0;
 }
