@@ -29,11 +29,13 @@ int main(int argc, const char * argv[]) {
             break;
         }
     }
-    for(int i = n - 1; i > 0; i--){
-        if(m[n - 1] < m[i]){
-            swap(m[i], m[n - 1]);
-            sort(m + i + 1, m + n, greater<int>());
-            break;
+    for(int i = n - 1; i >= 0; i--){
+        for(int j = i - 1; j >= 0; j--){
+            if(m[i] < m[j]){
+                swap(m[i], m[j]);
+                sort(m + j + 1, m + n, greater<int>());
+                break;
+            }
         }
     }
     if(state){
