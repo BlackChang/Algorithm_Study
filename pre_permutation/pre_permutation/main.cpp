@@ -8,13 +8,15 @@
 
 #include <iostream>
 #include <algorithm>
-
 using namespace std;
+
+int n = 0;
+int* m;
+int findPermutation();
 int main(int argc, const char * argv[]) {
-    int n = 0;
-    int* m;
-    int state = 0;
-    int finish = 0;
+    int idx = 0;
+    int idx2 = 0;
+    int max = 0;
     
     scanf("%d", &n);
     m = new int[n];
@@ -22,27 +24,22 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < n; i++)
         scanf("%d", &m[i]);
     
-    for(int i = 0; i < n; i++){
-        if(m[i] == i + 1)
-            state = 0;
-        else{
-            state = 1;
+    for(int i = n - 1; i > 0; i--){
+        if(m[i] < m[i - 1]){
+            idx = i - 1;
             break;
         }
     }
-    for(int i = n - 1; i >= 0; i--){
-        for(int j = i - 1; j >= 0; j--){
-            if(m[i] < m[j]){
-                swap(m[i], m[j]);
-                sort(m + j + 1, m + n, greater<int>());
-                finish = 1;
-                break;
-            }
+    for(int i = idx; i < n; i++){
+        if((m[i] > max) && (m[idx] > m[i])){
+            max = m[i];
+            idx2 = i;
         }
-        if(finish)
-            break;
     }
-    if(state){
+    swap(m[idx], m[idx2]);
+    sort(m + idx + 1, m + n, greater<int>());
+
+    if(idx2 != 0){
         for(int i = 0; i < n; i++)
             printf("%d ", m[i]);
         printf("\n");
