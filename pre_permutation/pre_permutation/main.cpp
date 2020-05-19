@@ -14,6 +14,7 @@ int main(int argc, const char * argv[]) {
     int n = 0;
     int* m;
     int state = 0;
+    int finish = 0;
     
     scanf("%d", &n);
     m = new int[n];
@@ -34,9 +35,12 @@ int main(int argc, const char * argv[]) {
             if(m[i] < m[j]){
                 swap(m[i], m[j]);
                 sort(m + j + 1, m + n, greater<int>());
+                finish = 1;
                 break;
             }
         }
+        if(finish)
+            break;
     }
     if(state){
         for(int i = 0; i < n; i++)
