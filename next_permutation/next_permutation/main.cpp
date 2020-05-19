@@ -7,78 +7,43 @@
 //
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <set>
+using namespace std;
 
 int n = 0;
-int len = 0;
-int tmp = 0;
-int* arr;
-int* list;
-int* check;
-int* org;
-void makeSequence(int);
-using namespace std;
+int* m;
 int main(int argc, const char * argv[]) {
+    int idx = 0;
+    int idx2 = 0;
+    
     scanf("%d", &n);
+    m = new int[n];
+    int min = n + 1;
     
-    arr = new int[n];
-    list = new int[n];
-    check = new int[n];
-    org = new int[n];
+    for(int i = 0; i < n; i++)
+        scanf("%d", &m[i]);
     
-    for(int i = 0; i < n; i++){
-        arr[i] = 0;
-        check[i] = 0;
+    for(int i = n - 1; i > 0; i--){
+        if(m[i] > m[i - 1]){
+            idx = i - 1;
+            break;
+        }
     }
-    
-    for(int i = 0; i < n; i++){
-        scanf("%d", &list[i]);
-        org[i] = list[i];
+    for(int i = idx + 1; i < n; i++){
+        if((m[i] < min) && (m[idx] < m[i])){
+            min = m[i];
+            idx2 = i;
+        }
     }
+    swap(m[idx], m[idx2]);
+    sort(m + idx + 1, m + n);
     
-    sort(list, list + n);
-    makeSequence(0);
-    
-    if(tmp != 1)
+    if(idx2 != 0){
+        for(int i = 0; i < n; i++)
+            printf("%d ", m[i]);
+        printf("\n");
+    }
+    else
         printf("-1\n");
     return 0;
-}
-void makeSequence(int num){
-    if(num == n){
-//        if(len == n){
-            for(int i = 0; i < n; i++)
-                printf("%d ", arr[i]);
-            printf("\n");
-            tmp = 1;
-//        }
-        len = 0;
-//        for(int i = 0; i < n; i++){
-//            if(arr[i] == org[i])
-//                len += 1;
-//        }
-        
-        return ;
-    }
-    else if(num == 0){
-        for(int i = org[num] - 1; i < n; i++){
-            if(check[i] == 0){
-                arr[num] = list[i];
-                check[i] = 1;
-                makeSequence(num + 1);
-                check[i] = 0;
-            }
-        }
-    }
-    else{
-        for(int i = org[num] - 1; i < n; i++){
-            if(check[i] == 0){
-                arr[num] = list[i];
-                check[i] = 1;
-                makeSequence(num + 1);
-                check[i] = 0;
-            }
-        }
-    }
 }
 
