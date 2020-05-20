@@ -8,54 +8,34 @@
 
 #include <iostream>
 #include <algorithm>
+using namespace std;
 
 int n = 0;
+int salary = 0;
 int* t;
 int* p;
-int* check;
-
-int calculateSalary(int);
+void calculateSalary(int, int);
 int main(int argc, const char * argv[]) {
-    int salary = 0;
-    int max = 0;
-    
     scanf("%d", &n);
     t = new int[n];
     p = new int[n];
-    check = new int[n];
     
-    for(int i = 0; i < n; i++){
+    for(int i = 0; i < n; i++)
         scanf("%d %d", &t[i], &p[i]);
-        check[i] = 0;
-    }
-    for(int i = 0; i < n; i++){
-        salary = calculateSalary(i);
-        if(max < salary)
-            max = salary;
-    }
-    printf("%d\n", max);
+    
+    calculateSalary(0, 0);
+    printf("%d\n", salary);
     
     return 0;
 }
-int calculateSalary(int num){
-    int pay = 0;
-    int next = num + t[num];
-    pay = p[num];
-    
-    for(int i = 0; i < n; i++){
-        if(check[i] == 0){
-            check[i] = 1;
-            pay += calculateSalary(num + i);
-        }
+void calculateSalary(int index, int sum){
+    if(index == n){
+        salary = max(salary, sum);
+        return;
     }
-    
-    if(next < n){
-        pay += calculateSalary(num + 1);
-        return pay;
-    }
-    else if(next == n)
-        return pay;
-    else
-        return 0;
+    if(index > n)
+        return;
+    calculateSalary(index + t[index], sum + p[index]);
+    calculateSalary(index + 1, sum);
 }
 
