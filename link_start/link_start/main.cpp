@@ -48,11 +48,13 @@ void makeSequence(int num){
             else
                 v2.push_back(i);
         }
-        for(int i = 0; i < n/2; i++){
-            for(int j = i; j < n/2; j++){
+        for(int i = 0; i < v1.size(); i++){
+            for(int j = i; j < v1.size(); j++)
                 sum1 += s[v1[i]][v1[j]] + s[v1[j]][v1[i]];
+        }
+        for(int i = 0; i < v2.size(); i++){
+            for(int j = i; j < v2.size(); j++)
                 sum2 += s[v2[i]][v2[j]] + s[v2[j]][v2[i]];
-            }
         }
         temp = abs(sum1 - sum2);
         if(temp < ans)
