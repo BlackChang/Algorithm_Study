@@ -21,6 +21,7 @@ int m[] = {-1,1,2};
 int n = 0;
 int k = 0;
 int cur = 0;
+int cnt = 0;
 int main(int argc, const char * argv[]) {
     scanf("%d %d", &n, &k);
 
@@ -62,9 +63,12 @@ int main(int argc, const char * argv[]) {
     if(n != k)
         ans.push_back(cur);
 
-    printf("%d\n", dist[k]);
-    for(int i = int(ans.size()) - 1; i >= 0; i--)
-        printf("%d ", ans[i]);
-    printf("\n");
+    for(int i = 0; i < ans.size() - 1; i++){
+//        printf("%d ", ans[i]);
+        if(abs(ans[i] - ans[i + 1]) == 1)
+            cnt += 1;
+    }
+    
+    printf("%d\n", cnt);
     return 0;
 }
