@@ -2,7 +2,7 @@
 //  main.cpp
 //  hide&seek3
 //
-//  Created by 이원창 on 2020/06/02.
+//  Created by 이원창 on 2020/06/01.
 //  Copyright © 2020 이원창. All rights reserved.
 //
 
