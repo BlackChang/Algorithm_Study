@@ -10,21 +10,24 @@
 #include <algorithm>
 #include <queue>
 #include <vector>
+#include <climits>
 #define MAX 100001
 
 using namespace std;
 bool visit[MAX];
-bool visit2[MAX];
 int dist[MAX];
+int route[MAX];
 int m[] = {-1,1,2};
 int n = 0;
 int k = 0;
-vector<int> ans;
-void dfs(int);
+int cur = 0;
 int main(int argc, const char * argv[]) {
     scanf("%d %d", &n, &k);
+
     dist[n] = 0;
     visit[n] = true;
+    route[n] = n;
+    vector<int> ans;
     
     queue <int> q;
     q.push(n);
@@ -42,37 +45,26 @@ int main(int argc, const char * argv[]) {
                 if(visit[next] == false){
                     visit[next] = true;
                     dist[next] = dist[cur] + 1;
+                    route[next] = cur;
                     q.push(next);
                 }
             }
         }
     }
-    printf("%d\n", dist[k]);
-    dfs(n);
-    return 0;
-}
-void dfs(int cur) {
-    int next = 0;
-    visit2[cur] = true;
-    ans.push_back(cur);
     
-    if (cur == k) {
-        for (int i = 0; i < ans.size(); i++)
-            printf("%d ", ans[i]);
-        printf("\n");
-        return;
+    ans.push_back(k);
+    cur = route[k];
+    
+    while (route[cur] != cur) {
+        ans.push_back(cur);
+        cur = route[cur];
     }
-    
-    for (int i = 0; i < 3; i++) {
-        if(i != 2)
-            next = cur + m[i];
-        else
-            next = cur * m[i];
+    if(n != k)
+        ans.push_back(cur);
 
-        if (dist[next] == dist[cur] + 1 && !visit2[next])
-            dfs(next);
-    }
-    
-    visit2[cur] = false;
-    ans.pop_back();
+    printf("%d\n", dist[k]);
+    for(int i = int(ans.size()) - 1; i >= 0; i--)
+        printf("%d ", ans[i]);
+    printf("\n");
+    return 0;
 }
