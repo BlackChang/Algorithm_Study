@@ -73,7 +73,7 @@ void DFS(int cur, int start, int line){
         if(visit[next] == false)
             DFS(next, start, line + 1);
         else{
-            if (next == start && line >= 2)
+            if(next == start && line >= 2)
                 DFS(next, start, line);
         }
         
@@ -87,8 +87,8 @@ int BFS(int a){
     memset(visit, false, sizeof(visit));
     queue<pair<int, int>> q;
     q.push(make_pair(a, 0));
+
     visit[a] = true;
-    
     while (q.empty() == 0){
         int cur = q.front().first;
         int cnt = q.front().second;
