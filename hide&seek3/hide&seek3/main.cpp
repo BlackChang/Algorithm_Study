@@ -16,19 +16,19 @@
 using namespace std;
 bool visit[MAX];
 int dist[MAX];
-int route[MAX];
-int m[] = {-1,1,2};
+int ans[MAX];
+int m[] = {2, -1, 1};
 int n = 0;
 int k = 0;
 int cur = 0;
 int cnt = 0;
+bool tel = false;
 int main(int argc, const char * argv[]) {
     scanf("%d %d", &n, &k);
 
     dist[n] = 0;
     visit[n] = true;
-    route[n] = n;
-    vector<int> ans;
+    ans[n] = 0;
     
     queue <int> q;
     q.push(n);
@@ -37,38 +37,28 @@ int main(int argc, const char * argv[]) {
         q.pop();
         int next = 0;
         for(int i = 0; i < 3; i++){
-            if(i != 2)
+            if(i != 0){
                 next = cur + m[i];
-            else
+                tel = false;
+            }
+            else{
                 next = cur * m[i];
-            
+                tel = true;
+            }
             if(0 <= next && next < MAX){
                 if(visit[next] == false){
                     visit[next] = true;
                     dist[next] = dist[cur] + 1;
-                    route[next] = cur;
+                    if(tel)
+                        ans[next] = ans[cur];
+                    else
+                        ans[next] = ans[cur] + 1;
                     q.push(next);
                 }
             }
         }
     }
     
-    ans.push_back(k);
-    cur = route[k];
-    
-    while (route[cur] != cur) {
-        ans.push_back(cur);
-        cur = route[cur];
-    }
-    if(n != k)
-        ans.push_back(cur);
-
-    for(int i = 0; i < ans.size() - 1; i++){
-//        printf("%d ", ans[i]);
-        if(abs(ans[i] - ans[i + 1]) == 1)
-            cnt += 1;
-    }
-    
-    printf("%d\n", cnt);
+    printf("%d\n", ans[k]);
     return 0;
 }
