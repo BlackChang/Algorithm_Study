@@ -14,7 +14,7 @@ int n = 0;
 int* par;
 bool* visit;
 vector<int> *v;
-void dd(int);
+void dfs(int);
 int main(int argc, const char * argv[]){
     int tmp1 = 0;
     int tmp2 = 0;
@@ -30,28 +30,28 @@ int main(int argc, const char * argv[]){
         v[tmp2].push_back(tmp1);
     }
     
-    dd(1);
+    dfs(1);
     for(int i = 2; i <= n; i++)
         printf("%d\n", par[i]);
     
     return 0;
 }
-void dd(int idx){
+void dfs(int idx){
     visit[idx] = true;
     if((int)(v[idx].size()) == 1){
-        par[idx] = v[idx].front();
-        return;
+        if(idx != 1){
+            par[idx] = v[idx].front();
+            return;
+        }
+        else
+            dfs(v[idx].front());
     }
     else{
         for(int i = 0; i < v[idx].size(); i++){
             if(visit[v[idx][i]])
                 par[idx] = v[idx][i];
-            else{
-                if(v[idx][i] == 1)
-                    par[idx] = 1;
-                else
-                    dd(v[idx][i]);
-            }
+            else
+                dfs(v[idx][i]);
         }
     }
 }
