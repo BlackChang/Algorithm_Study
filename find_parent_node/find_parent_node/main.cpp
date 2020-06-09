@@ -18,7 +18,7 @@ void dd(int);
 int main(int argc, const char * argv[]){
     int tmp1 = 0;
     int tmp2 = 0;
-
+    
     scanf("%d", &n);
     par = new int[n + 1];
     visit = new bool[n + 1];
@@ -30,15 +30,6 @@ int main(int argc, const char * argv[]){
         v[tmp2].push_back(tmp1);
     }
     
-//    for(int i = 1; i <= n; i++){
-//        int j = 0;
-//        while(j < v[i].size()){
-//            printf("%d ", v[i][j]);
-//            j += 1;
-//        }
-//        printf("\n");
-//    }
-    
     dd(1);
     for(int i = 2; i <= n; i++)
         printf("%d\n", par[i]);
@@ -46,22 +37,21 @@ int main(int argc, const char * argv[]){
     return 0;
 }
 void dd(int idx){
+    visit[idx] = true;
     if((int)(v[idx].size()) == 1){
         par[idx] = v[idx].front();
         return;
     }
     else{
         for(int i = 0; i < v[idx].size(); i++){
-            if(!visit[v[idx][i]]){
-                visit[i] = true;
+            if(visit[v[idx][i]])
+                par[idx] = v[idx][i];
+            else{
                 if(v[idx][i] == 1)
                     par[idx] = 1;
                 else
-                    dd(i);
-//                visit[i] = false;
+                    dd(v[idx][i]);
             }
-            else
-                par[idx] = i;
         }
     }
 }
