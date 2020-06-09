@@ -10,12 +10,13 @@
 #include <algorithm>
 #include <vector>
 using namespace std;
-vector<int> v[10000];
+vector<int> v[10001];
 int h = 0;
 int x = 1;
 int height = 0;
 int width = 0;
-int tree[2500][10000];
+int** tree;
+void getHeight(int);
 void inorder(int);
 int main(int argc, const char * argv[]) {
     int tmp1 = 0;
@@ -34,6 +35,11 @@ int main(int argc, const char * argv[]) {
         v[tmp1].push_back(tmp3);
     }
     
+    getHeight(root);
+    tree = new int*[height + 1];
+    for(int i = 0; i <= height; i++)
+        tree[i] = new int[width + 1];
+
     inorder(root);
     for(int i = 1; i <= height; i++){
         int start = 10000;
@@ -45,20 +51,30 @@ int main(int argc, const char * argv[]) {
                 last = j;
             }
         }
-        if((last - start + 1) > ans.second){
+        int dis = last - start + 1;
+        if(dis > ans.second){
             ans.first = i;
-            ans.second = last - start + 1;
+            ans.second = dis;
         }
     }
+
     printf("%d %d\n", ans.first, ans.second);
-    
     return 0;
 }
-void inorder(int idx){
+void getHeight(int idx){
     h += 1;
     if(h > height)
         height = h;
     
+    if(v[idx][0] != -1)
+        getHeight(v[idx][0]);
+    
+    if(v[idx][1] != -1)
+        getHeight(v[idx][1]);
+    
+    h -= 1;
+}
+void inorder(int idx){
     if(v[idx][0] == -1){
         tree[h][x] = idx;
         x += 1;
@@ -72,6 +88,4 @@ void inorder(int idx){
     
     if(v[idx][1] != -1)
         inorder(v[idx][1]);
-    
-    h -= 1;
 }
