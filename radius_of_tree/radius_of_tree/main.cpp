@@ -13,18 +13,13 @@ using namespace std;
 int n = 0;
 int ans = 0;
 int temp = 0;
-int** dis;
 bool* visit;
-vector<int>* v;
+vector<pair<int, int>>* v;
 void dfs(int);
 int main(int argc, const char * argv[]) {
     scanf("%d", &n);
     visit = new bool[n + 1];
-    v = new vector<int>[n + 1];
-    dis = new int*[n + 1];
-    
-    for(int i = 0; i <= n; i++)
-        dis[i] = new int[n + 1];
+    v = new vector<pair<int, int>>[n + 1];
     
     for(int i = 0; i < n; i++){
         int idx = 0;
@@ -36,38 +31,24 @@ int main(int argc, const char * argv[]) {
         
         while(p != -1){
             scanf("%d", &d);
-            v[idx].push_back(p);
-            dis[idx][p] = d;
-            dis[p][idx] = d;
+            v[idx].push_back(make_pair(p, d));
             scanf("%d", &p);
         }
     }
-//    for(int i = 1; i <= n; i++){
-//        for(int j = 1; j <= n; j++){
-//            printf("%d ", dis[i][j]);
-//        }
-//        printf("\n");
-//    }
-//    for(int i = 1; i <= n; i++){
-//        for(int j = 0; j < v[i].size(); j++){
-//            printf("%d ", v[i][j]);
-//        }
-//        printf("\n");
-//    }
     dfs(1);
     printf("%d\n", ans);
     return 0;
 }
 void dfs(int idx){
     for(int i = 0; i < v[idx].size(); i++){
-        if(!visit[v[idx][i]]){
-            visit[v[idx][i]] = true;
-            temp += dis[idx][v[idx][i]];
+        if(!visit[v[idx][i].first]){
+            visit[v[idx][i].first] = true;
+            temp += v[idx][i].second;
             if(ans < temp)
                 ans = temp;
-            dfs(v[idx][i]);
-            visit[v[idx][i]] = false;
-            temp -= dis[idx][v[idx][i]];
+            dfs(v[idx][i].first);
+            visit[v[idx][i].first] = false;
+            temp -= v[idx][i].second;
         }
     }
 }
