@@ -11,12 +11,11 @@
 #include <vector>
 using namespace std;
 int n = 0;
-int ans = 0;
-int temp = 0;
+long long int ans = 0;
 int root = 0;
 bool* visit;
 vector<pair<int, int>>* v;
-void dfs(int);
+void dfs(int, long long int);
 int main(int argc, const char * argv[]) {
     scanf("%d", &n);
     visit = new bool[n + 1];
@@ -37,28 +36,33 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    dfs(1);
+    dfs(1, 0);
     ans = 0;
     for(int i = 0; i <= n; i++)
         visit[i] = false;
-    dfs(root);
-    printf("%d\n", ans);
+
+    dfs(root, 0);
+    printf("%lld\n", ans);
     
     return 0;
 }
-void dfs(int idx){
+void dfs(int idx, long long int len){
+    if(visit[idx])
+        return;
+    
+    visit[idx] = true;
     for(int i = 0; i < v[idx].size(); i++){
         int next = v[idx][i].first;
         if(!visit[next]){
-            visit[next] = true;
-            temp += v[idx][i].second;
-            dfs(next);
-            if(ans < temp){
-                ans = temp;
+            long long int tmp = len + v[idx][i].second;
+            dfs(next, tmp);
+            if(ans < tmp){
+                ans = tmp;
                 root = next;
             }
             visit[next] = false;
-            temp -= v[idx][i].second;
         }
     }
+    visit[idx] = false;
 }
+
