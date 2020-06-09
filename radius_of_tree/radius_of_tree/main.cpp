@@ -60,7 +60,6 @@ void dfs(int idx, long long int len){
                 ans = tmp;
                 root = next;
             }
-            visit[next] = false;
         }
     }
     visit[idx] = false;
