@@ -10,55 +10,56 @@
 #include <algorithm>
 #include <vector>
 using namespace std;
-vector<int> v[10001];
+struct tree{
+    int root;
+    int l;
+    int r;
+    tree() : root(-1), l(-1), r(-1) {}
+};
+vector<tree> v;
+vector<int>* t;
 int h = 0;
 int x = 1;
 int height = 0;
 int width = 0;
-int** tree;
 void getHeight(int);
 void inorder(int);
 int main(int argc, const char * argv[]) {
-    int tmp1 = 0;
-    int tmp2 = 0;
-    int tmp3 = 0;
-    int root = 0;
-    pair<int, int> ans = make_pair(0, 0);
+    int root = 1;
+    pair<long long int, long long int> ans = make_pair(0, 0);
     
     scanf("%d", &width);
+    v.resize(width + 1);
     for(int i = 0; i < width; i++){
-        scanf("%d %d %d", &tmp1, &tmp2, &tmp3);
-        if(i == 0)
-            root = tmp1;
+        int parent = 0;
+        int left = 0;
+        int right = 0;
         
-        v[tmp1].push_back(tmp2);
-        v[tmp1].push_back(tmp3);
+        scanf("%d %d %d", &parent, &left, &right);
+        v[parent].l = left;
+        v[parent].r = right;
+        v[left].root = parent;
+        v[right].root = parent;
     }
+        
+    while(v[root].root != -1)
+        root = v[root].root;
     
     getHeight(root);
-    tree = new int*[height + 1];
-    for(int i = 0; i <= height; i++)
-        tree[i] = new int[width + 1];
-
+    
+    t = new vector<int>[height + 1];
+    h = 0;
+    
     inorder(root);
     for(int i = 1; i <= height; i++){
-        int start = 10000;
-        int last = 0;
-        for(int j = 1; j <= width; j++){
-            if(tree[i][j] != 0){
-                if(start > j)
-                    start = j;
-                last = j;
-            }
-        }
-        int dis = last - start + 1;
-        if(dis > ans.second){
+        int temp = t[i].back() - t[i].front() + 1;
+        if(temp > ans.second){
             ans.first = i;
-            ans.second = dis;
+            ans.second = temp;
         }
     }
 
-    printf("%d %d\n", ans.first, ans.second);
+    printf("%lld %lld\n", ans.first, ans.second);
     return 0;
 }
 void getHeight(int idx){
@@ -66,26 +67,27 @@ void getHeight(int idx){
     if(h > height)
         height = h;
     
-    if(v[idx][0] != -1)
-        getHeight(v[idx][0]);
-    
-    if(v[idx][1] != -1)
-        getHeight(v[idx][1]);
-    
+    if(v[idx].l != -1)
+        getHeight(v[idx].l);
+        
+    if(v[idx].r != -1)
+        getHeight(v[idx].r);
     h -= 1;
 }
 void inorder(int idx){
-    if(v[idx][0] == -1){
-        tree[h][x] = idx;
+    h += 1;
+    if(v[idx].l != -1){
+        inorder(v[idx].l);
+        t[h].push_back(x);
+        x += 1;
+    }
+    else{
+        t[h].push_back(x);
         x += 1;
     }
     
-    if(v[idx][0] != -1){
-        inorder(v[idx][0]);
-        tree[h][x] = idx;
-        x += 1;
-    }
+    if(v[idx].r != -1)
+        inorder(v[idx].r);
     
-    if(v[idx][1] != -1)
-        inorder(v[idx][1]);
+    h -= 1;
 }
