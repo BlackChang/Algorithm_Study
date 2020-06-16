@@ -15,10 +15,7 @@ int main(int argc, const char * argv[]) {
     queue<pair<int, int>> horse;
     int** cnt;
     int n = 0;
-    int r1 = 0;
-    int c1 = 0;
-    int r2 = 0;
-    int c2 = 0;
+    int r1, c1, r2 ,c2;
     int newR[6] = {-2, -2, 0, 0, 2, 2};
     int newC[6] = {-1, 1, -2, 2, -1, 1};
 
@@ -30,11 +27,13 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < n; i++)
         cnt[i] = new int[n];
     
-    memset(cnt, false, sizeof(cnt));
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++)
-            cnt[i][j] = -1;
-    }
+    for(int i = 0; i < n; i++)
+        memset(cnt[i], -1, sizeof(int)*n);
+//    for(int i = 0; i < n; i++){
+//        for(int j = 0; j < n; j++)
+//            printf("%d ", cnt[i][j]);
+//        printf("\n");
+//    }
     cnt[r1][c1] = 0;
     
     while (!horse.empty()) {
