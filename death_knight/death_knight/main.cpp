@@ -29,11 +29,6 @@ int main(int argc, const char * argv[]) {
     
     for(int i = 0; i < n; i++)
         memset(cnt[i], -1, sizeof(int)*n);
-//    for(int i = 0; i < n; i++){
-//        for(int j = 0; j < n; j++)
-//            printf("%d ", cnt[i][j]);
-//        printf("\n");
-//    }
     cnt[r1][c1] = 0;
     
     while (!horse.empty()) {
@@ -48,11 +43,12 @@ int main(int argc, const char * argv[]) {
             if (nR < 0 || nC >= n || nC < 0 || nR >= n)
                 continue;
             else {
-                if (cnt[nR][nC] != -1 && cnt[r][c] + 1 > cnt[nR][nC])
+                if (cnt[nR][nC] == -1 || cnt[r][c] + 1 < cnt[nR][nC]){
+                    cnt[nR][nC] = cnt[r][c] + 1;
+                    horse.push(make_pair(nR, nC));
+                }
+                else
                     continue;
-                
-                cnt[nR][nC] = cnt[r][c] + 1;
-                horse.push(make_pair(nR, nC));
             }
         }
     }
