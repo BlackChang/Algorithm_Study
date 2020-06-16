@@ -8,9 +8,9 @@
 
 #include <iostream>
 #include <algorithm>
-#include <vector>
+#include <queue>
 using namespace std;
-vector<pair<int, int>> horse;
+queue<pair<int, int>> horse;
 int** cnt;
 int n = 0;
 int r1 = 0;
@@ -24,27 +24,35 @@ int newC[6] = {-1, 1, -2, 2, -1, 1};
 int main(int argc, const char * argv[]) {
     scanf("%d", &n);
     scanf("%d %d %d %d", &r1, &c1, &r2, &c2);
-    horse.push_back(make_pair(r1, c1));
+    horse.push(make_pair(r1, c1));
     
     cnt = new int*[n];
     for(int i = 0; i < n; i++)
         cnt[i] = new int[n];
     
-    while (r != w) {
-        pair<int, int> h = horse[r++];
-        int nR, nC;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++)
+            cnt[i][j] = -1;
+    }
+    cnt[r1][c1] = 0;
+    
+    while (!horse.empty()) {
+        int nR = 0;
+        int nC = 0;
+        int R = horse.front().first;
+        int C = horse.front().second;
+        horse.pop();
         for (int i = 0; i < 6; i++) {
-            nR = h.first + newR[i];
-            nC = h.second + newC[i];
+            nR = R + newR[i];
+            nC = C + newC[i];
             if (nR < 0 || nC >= n || nC < 0 || nR >= n)
                 continue;
             else {
-                if (cnt[nR][nC] != -1 && cnt[h.first][h.second] + 1 > cnt[nR][nC])
+                if (cnt[nR][nC] != -1 && cnt[R][C] + 1 > cnt[nR][nC])
                     continue;
                 
-                cnt[nR][nC] = cnt[h.first][h.second] + 1;
-                horse[w].first = nR;
-                horse[w++].second = nC;
+                cnt[nR][nC] = cnt[R][C] + 1;
+                horse.push(make_pair(nR, nC));
             }
         }
     }
