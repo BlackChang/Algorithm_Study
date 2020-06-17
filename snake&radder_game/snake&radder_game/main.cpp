@@ -17,12 +17,12 @@ int main(int argc, const char * argv[]) {
     int x, y;
     int board[101];
     int check[101];
-    bool radder[101];
+    bool rs[101];
     bool snake[101];
     bool visit[101];
     queue<int> q;
     memset(board, 0, sizeof(board));
-    memset(radder, 0, sizeof(radder));
+    memset(rs, 0, sizeof(rs));
     memset(snake, false, sizeof(snake));
     memset(visit, false, sizeof(visit));
     memset(check, 0, sizeof(check));
@@ -31,11 +31,12 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < n; i++){
         scanf("%d %d", &x, &y);
         board[x] = y;
-        radder[x] = true;
+        rs[x] = true;
     }
     for(int i = 0; i < m; i++){
         scanf("%d %d", &x, &y);
-        snake[x] = true;
+        board[x] = y;
+        rs[x] = true;
     }
     
     q.push(1);
@@ -44,12 +45,14 @@ int main(int argc, const char * argv[]) {
         q.pop();
         for(int i = 1; i <=  6; i++){
             int newX = x + i;
-            if(visit[100])
+            if(visit[100]){
+                printf("%d\n", check[100]);
                 break;
-            if(newX > 100 || snake[newX])
+            }
+            if(newX > 100)
                 continue;
             else {
-                if(radder[newX])
+                if(rs[newX])
                     newX = board[newX];
             }
             if(!visit[newX]){
@@ -60,6 +63,10 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    printf("%d\n", check[100]);
+//    for(int i = 1; i <= 100; i++){
+//        printf("%d", check[i]);
+//        if(i % 10 == 0)
+//            printf("\n");
+//    }
     return 0;
 }
