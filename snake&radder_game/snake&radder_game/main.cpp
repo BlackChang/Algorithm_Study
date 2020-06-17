@@ -14,40 +14,52 @@
 using namespace std;
 int main(int argc, const char * argv[]) {
     int n, m;
-    int tmp, tmp2;
+    int x, y;
     int board[101];
+    int check[101];
+    bool radder[101];
+    bool snake[101];
     bool visit[101];
-    vector<pair<int, int>> r;
-    vector<pair<int, int>> s;
-    queue<pair<int, int>> ans;
+    queue<int> q;
     memset(board, 0, sizeof(board));
+    memset(radder, 0, sizeof(radder));
+    memset(snake, false, sizeof(snake));
     memset(visit, false, sizeof(visit));
-
+    memset(check, 0, sizeof(check));
+    
     scanf("%d %d", &n, &m);
     for(int i = 0; i < n; i++){
-        scanf("%d %d", &tmp, &tmp2);
-        r.push_back(make_pair(tmp, tmp2));
+        scanf("%d %d", &x, &y);
+        board[x] = y;
+        radder[x] = true;
     }
     for(int i = 0; i < m; i++){
-        scanf("%d %d", &tmp, &tmp2);
-        s.push_back(make_pair(tmp, tmp2));
+        scanf("%d %d", &x, &y);
+        snake[x] = true;
     }
-    ans.push(make_pair(1, 0));
-    while(!ans.empty()){
-        int x = ans.front().first;
-        int check = ans.front().second;
-        ans.pop();
-        if(x == 100){
-            printf("%d\n", check);
-            break;
-        }
+    
+    q.push(1);
+    while(!q.empty()){
+        int x = q.front();
+        q.pop();
         for(int i = 1; i <=  6; i++){
             int newX = x + i;
-            if(newX > 100 && visit[newX])
+            if(visit[100])
+                break;
+            if(newX > 100 || snake[newX])
                 continue;
-            
+            else {
+                if(radder[newX])
+                    newX = board[newX];
+            }
+            if(!visit[newX]){
+                visit[newX] = true;
+                check[newX] = check[x] + 1;
+                q.push(newX);
+            }
         }
     }
     
+    printf("%d\n", check[100]);
     return 0;
 }
