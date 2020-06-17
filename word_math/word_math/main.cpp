@@ -9,15 +9,20 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <cstring>
+#include <string>
 using namespace std;
+vector<string> v;
 int n = 0;
-int ans = 0;
-int r1, c1, r2, c2;
 int main(int argc, const char * argv[]) {
+    string temp;
     scanf("%d", &n);
-    scanf("%d %d %d %d", &r1, &c1, &r2, &c2);
-    
-    
-    printf("%d\n", ans);
+    getchar();
+        
+    for(int i = 0; i < n; i++){
+        getline(cin, temp);
+        v.push_back(temp);
+    }
+
     return 0;
 }
