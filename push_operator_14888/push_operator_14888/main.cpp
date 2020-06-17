@@ -17,12 +17,11 @@ int op[4];
 bool* visit;
 vector<int> num;
 vector<int> ops;
-vector<int> per;
-pair<int, int> ans;
+pair<long long int, long long int> ans;
 void dfs(int, int, int, int);
 int main(int argc, const char * argv[]) {
-    ans.first = 0;
-    ans.second = INT_MAX;
+    ans.first = LLONG_MIN;
+    ans.second = LLONG_MAX;
     scanf("%d", &n);
     for(int i = 0; i < n; i++){
         int temp = 0;
@@ -43,18 +42,16 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < (int)ops.size(); i++){
         if(!visit[i]){
             visit[i] = true;
-            per.push_back(ops[i]);
             dfs(num[0], num[1], ops[i], 1);
             visit[i] = false;
-            per.pop_back();
         }
     }
     
-    printf("%d\n%d\n", ans.first, ans.second);
+    printf("%lld\n%lld\n", ans.first, ans.second);
     return 0;
 }
 void dfs(int num1, int num2, int opr, int idx){
-    int temp = 0;
+    long long int temp = 0;
     if(opr == 1)
         temp = num1 + num2;
     else if(opr == 2)
@@ -75,10 +72,8 @@ void dfs(int num1, int num2, int opr, int idx){
     for(int i = 0; i < (int)ops.size(); i++){
         if(!visit[i]){
             visit[i] = true;
-            per.push_back(ops[i]);
             dfs(temp, num[idx + 1], ops[i], idx + 1);
             visit[i] = false;
-            per.pop_back();
         }
     }
 }
