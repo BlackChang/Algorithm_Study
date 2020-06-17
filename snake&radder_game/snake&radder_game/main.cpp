@@ -18,22 +18,15 @@ int main(int argc, const char * argv[]) {
     int board[101];
     int check[101];
     bool rs[101];
-    bool snake[101];
     bool visit[101];
     queue<int> q;
     memset(board, 0, sizeof(board));
     memset(rs, 0, sizeof(rs));
-    memset(snake, false, sizeof(snake));
     memset(visit, false, sizeof(visit));
     memset(check, 0, sizeof(check));
     
     scanf("%d %d", &n, &m);
-    for(int i = 0; i < n; i++){
-        scanf("%d %d", &x, &y);
-        board[x] = y;
-        rs[x] = true;
-    }
-    for(int i = 0; i < m; i++){
+    for(int i = 0; i < n + m; i++){
         scanf("%d %d", &x, &y);
         board[x] = y;
         rs[x] = true;
@@ -47,10 +40,6 @@ int main(int argc, const char * argv[]) {
             break;
         for(int i = 1; i <=  6; i++){
             int newX = x + i;
-//            if(visit[100]){
-//                printf("%d\n", check[100]);
-//                break;
-//            }
             if(newX > 100 || visit[newX])
                 continue;
             if(rs[newX])
@@ -64,11 +53,5 @@ int main(int argc, const char * argv[]) {
         }
     }
     printf("%d\n", check[100]);
-    
-//        for(int i = 1; i <= 100; i++){
-//            printf("%d", check[i]);
-//            if(i % 10 == 0)
-//                printf("\n");
-//        }
     return 0;
 }
