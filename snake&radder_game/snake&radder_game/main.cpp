@@ -43,18 +43,19 @@ int main(int argc, const char * argv[]) {
     while(!q.empty()){
         int x = q.front();
         q.pop();
+        if(visit[100])
+            break;
         for(int i = 1; i <=  6; i++){
             int newX = x + i;
-            if(visit[100]){
-                printf("%d\n", check[100]);
-                break;
-            }
-            if(newX > 100)
+//            if(visit[100]){
+//                printf("%d\n", check[100]);
+//                break;
+//            }
+            if(newX > 100 || visit[newX])
                 continue;
-            else {
-                if(rs[newX])
-                    newX = board[newX];
-            }
+            if(rs[newX])
+                newX = board[newX];
+            
             if(!visit[newX]){
                 visit[newX] = true;
                 check[newX] = check[x] + 1;
@@ -62,11 +63,12 @@ int main(int argc, const char * argv[]) {
             }
         }
     }
+    printf("%d\n", check[100]);
     
-//    for(int i = 1; i <= 100; i++){
-//        printf("%d", check[i]);
-//        if(i % 10 == 0)
-//            printf("\n");
-//    }
+//        for(int i = 1; i <= 100; i++){
+//            printf("%d", check[i]);
+//            if(i % 10 == 0)
+//                printf("\n");
+//        }
     return 0;
 }
