@@ -15,17 +15,17 @@ using namespace std;
 int n = 0;
 int op[4];
 bool* visit;
-vector<int> num;
+vector<long long int> num;
 vector<int> ops;
 pair<long long int, long long int> ans;
-void dfs(int, int, int, int);
+void dfs(long long int, long long int, int, int);
 int main(int argc, const char * argv[]) {
     ans.first = LLONG_MIN;
     ans.second = LLONG_MAX;
     scanf("%d", &n);
     for(int i = 0; i < n; i++){
-        int temp = 0;
-        scanf("%d", &temp);
+        long long int temp = 0;
+        scanf("%lld", &temp);
         num.push_back(temp);
     }
 
@@ -36,10 +36,10 @@ int main(int argc, const char * argv[]) {
         for(int j = 0; j < op[i]; j++)
             ops.push_back(i + 1);
     }
-    visit = new bool[(int)ops.size()];
+    visit = new bool[n - 1];
 
-    memset(visit, false, sizeof(visit));
-    for(int i = 0; i < (int)ops.size(); i++){
+    memset(visit, false, sizeof(bool)*(n - 1));
+    for(int i = 0; i < n - 1; i++){
         if(!visit[i]){
             visit[i] = true;
             dfs(num[0], num[1], ops[i], 1);
@@ -50,7 +50,7 @@ int main(int argc, const char * argv[]) {
     printf("%lld\n%lld\n", ans.first, ans.second);
     return 0;
 }
-void dfs(int num1, int num2, int opr, int idx){
+void dfs(long long int num1, long long int num2, int opr, int idx){
     long long int temp = 0;
     if(opr == 1)
         temp = num1 + num2;
@@ -61,7 +61,7 @@ void dfs(int num1, int num2, int opr, int idx){
     else if(opr == 4)
         temp = num1 / num2;
     
-    if(idx == (int)ops.size()){
+    if(idx == n - 1){
         if(temp > ans.first)
             ans.first = temp;
 
@@ -69,7 +69,7 @@ void dfs(int num1, int num2, int opr, int idx){
             ans.second = temp;
         return;
     }
-    for(int i = 0; i < (int)ops.size(); i++){
+    for(int i = 0; i < n - 1; i++){
         if(!visit[i]){
             visit[i] = true;
             dfs(temp, num[idx + 1], ops[i], idx + 1);
