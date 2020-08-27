@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <queue>
 #include <vector>
+#include <cstring>
 #include <climits>
 using namespace std;
 struct Info{
@@ -23,21 +24,16 @@ int dy[4] = {0, 0, 1, -1};
 int main(int argc, const char * argv[]) {
     int w = 0;
     int h = 0;
-    int** cnt;
-    char** map;
+    int cnt[100][100];
+    char map[100][100];
     vector<pair<int, int>> laser;
     queue<Info> q;
     cin >> w >> h;
     getchar();
     
-    map = new char*[h];
-    cnt = new int*[h];
     for(int i = 0; i < h; i++){
-        map[i] = new char[w];
-        memset(cnt[i], INT_MAX, sizeof(int) * w);
-//        cnt[i] = new int[w];
+        memset(cnt[i], 100, sizeof(cnt[i]));
     }
-    
     for(int i = 0; i < h; i++){
         for(int j = 0; j < w; j++){
             cin >> map[i][j];
@@ -57,30 +53,29 @@ int main(int argc, const char * argv[]) {
         for(int i = 0; i < 4; i++){
             int nx = x + dx[i];
             int ny = y + dy[i];
-            int nc = 0;
-            if(0 <= nx && nx < w && 0 <= ny && ny < h){
-                if(map[ny][nx] == '*')
-                    continue;
-                else {
-                    if(d != -1 && d != i)
-                        nc = c + 1;
-                    else
-                        nc = c;
-                    
-                    if(cnt[ny][nx] >= c){
-                        cnt[ny][nx] = c;
-                        q.push(Info{ny, nx, i, nc});
-                    }
+            
+            if(0 > nx || nx >= w || 0 > ny || ny >= h)
+                continue;
+            else if(map[ny][nx] == '*')
+                continue;
+            else {
+                int nc = 0;
+                if(d != -1)
+                    nc = (d == i) ? c : c + 1;
+                if(cnt[ny][nx] >= nc){
+                    cnt[ny][nx] = nc;
+                    q.push(Info{nx, ny, i, nc});
+//                    cout << nx << " " << ny << " " << i << " " << nc << endl;
                 }
             }
         }
     }
     
-    for(int i = 0; i < h; i++){
-        for(int j = 0; j < w; j++)
-            cout << cnt[i][j] << " ";
-        cout << endl;
-    }
-//    cout << cnt[laser[1].first][laser[1].second] << endl;
+//    for(int i = 0; i < h; i++){
+//        for(int j = 0; j < w; j++)
+//            cout << cnt[i][j] << " ";
+//        cout << endl;
+//    }
+    cout << cnt[laser[1].first][laser[1].second] << endl;
     return 0;
 }
