@@ -59,23 +59,17 @@ int main(int argc, const char * argv[]) {
             else if(map[ny][nx] == '*')
                 continue;
             else {
-                int nc = 0;
-                if(d != -1)
-                    nc = (d == i) ? c : c + 1;
+                int nc = c;
+                if(d != -1 && d != i)
+                    nc = c + 1;
                 if(cnt[ny][nx] >= nc){
                     cnt[ny][nx] = nc;
                     q.push(Info{nx, ny, i, nc});
-//                    cout << nx << " " << ny << " " << i << " " << nc << endl;
                 }
             }
         }
     }
     
-//    for(int i = 0; i < h; i++){
-//        for(int j = 0; j < w; j++)
-//            cout << cnt[i][j] << " ";
-//        cout << endl;
-//    }
     cout << cnt[laser[1].first][laser[1].second] << endl;
     return 0;
 }
