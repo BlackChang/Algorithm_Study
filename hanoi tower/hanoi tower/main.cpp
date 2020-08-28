@@ -17,7 +17,8 @@ int main(int argc, const char * argv[]) {
     long long ans = 1;
     
     cin.tie(NULL);
-    cin.sync_with_stdio(false);
+    cout.tie(NULL);
+    ios_base::sync_with_stdio(false);
     cin >> n;
     
     for(int i = 0; i < n; i++){
