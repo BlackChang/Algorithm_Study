@@ -30,19 +30,16 @@ int main(int argc, const char * argv[]) {
 
     return 0;
 }
-void hanoi(int n, int start, int tmp ,int end){
+void hanoi(int n, int start, int mid ,int end){
     if(n == 1){
-        cout << "1 3" << endl;
+        cout << start << " " << end << endl;
         return;
     }
-    else if(n == 2){
-        cout << start << ' ' << tmp << endl;
-        cout << start << ' ' << end << endl;
-        cout << tmp << ' ' << end << endl;
+    else{
+        hanoi(n - 1, start, end, mid);
+        hanoi(1, start, mid, end);
+        hanoi(n - 1, mid, start, end);
         return;
     }
 
-    hanoi(n - 1, start, end, tmp);
-    cout << start << ' ' << end << endl;
-    hanoi(n - 1, tmp, start, end);
 }
