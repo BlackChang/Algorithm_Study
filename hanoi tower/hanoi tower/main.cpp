@@ -38,7 +38,7 @@ void hanoi(int n, int start, int mid ,int end){
     }
     else{
         hanoi(n - 1, start, end, mid);
-        hanoi(1, start, mid, end);
+        cout << start << " " << end << endl;
         hanoi(n - 1, mid, start, end);
         return;
     }
