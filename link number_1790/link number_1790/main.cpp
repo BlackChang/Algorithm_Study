@@ -9,53 +9,51 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-int n = 0;
-int k = 0;
-int dfs(int, int);
 int main(int argc, const char * argv[]) {
+    int n = 0;
+    int k = 0;
+    int check = 1;
+    long long int sum = 0;
+
     cin >> n >> k;
-
-    int tmp = n;
-    int nLen = 0;
-    int totalLen = 0;
-
-    while(true){
-        if(tmp <= 0)
-            break;
-        tmp = tmp / 10;
-        nLen++;
+    
+    int l = 1;
+    int r = n;
+    int ans = 0;
+    while(check <= n){
+        sum += (n - check + 1);
+        check *= 10;
     }
-
-    for(int i = 0; i < nLen; i++){
-        totalLen += n;
-        totalLen -= pow(10, i) - 1;
+    if(sum < k){
+        cout << "-1\n";
+        return 0;
+    }
+    while(l <= r){
+        int m = (l + r) / 2;
+        sum = 0;
+        check = 1;
+        while(check <= m){
+            sum += (m - check + 1);
+            check *= 10;
+        }
+        if(sum >= k){
+            ans = m;
+            r = m - 1;
+        }
+        else
+            l = m + 1;
     }
     
-    if(k > totalLen)
-        cout << "-1\n";
-    else{
-        if(k < 10)
-            cout << k << endl;
-        else
-            cout << dfs(k, 1) << endl;
+    check = 1;
+    sum = 0;
+    while(check <= ans){
+        sum += (ans - check + 1);
+        check *= 10;
     }
+    
+    string s = to_string(ans);
+    cout << s[s.size() - (sum - k) - 1] << endl;
     
     return 0;
-}
-int dfs(int k, int level){
-    int answer = 0;
-    int tmp = 9 * pow(10, level - 1) * level;
-    int temp = pow(10, level - 1);
-    int mod = k % level;
-    if(k > tmp)
-        dfs(k - tmp, level + 1);
-    else{
-        if(mod == 0)
-            answer = ((k % temp) / level) - 1;
-        else
-            answer = ceil(k / (level * pow(10, level - mod)));
-    }
-    
-    return answer;
 }
 
