@@ -11,7 +11,7 @@
 using namespace std;
 int n = 0;
 int k = 0;
-void dfs(int, int, int);
+int dfs(int, int);
 int main(int argc, const char * argv[]) {
     cin >> n >> k;
 
@@ -37,32 +37,25 @@ int main(int argc, const char * argv[]) {
         if(k < 10)
             cout << k << endl;
         else
-            dfs(k, 10, 1);
+            cout << dfs(k, 1) << endl;
     }
     
     return 0;
 }
-void dfs(int num, int cn, int level){
-    if (num - (cn - cn / 10) * level > 0)
-        dfs(num - (cn - cn / 10) * level, cn * 10, level + 1);
-    int a = num / level;
-    int b = num % level;
-    cn /= 10;
-    int tmp = cn + a - 1;
-    int answer = tmp % 10;
-    if (b > 0){
-        tmp++;
-        if (tmp > n)
-            return;
-        for (int i = 0; i < b; i++){
-            answer = tmp / cn;
-            tmp %= cn;
-            cn /= 10;
-        }
+int dfs(int k, int level){
+    int answer = 0;
+    int tmp = 9 * pow(10, level - 1) * level;
+    int temp = pow(10, level - 1);
+    int mod = k % level;
+    if(k > tmp)
+        dfs(k - tmp, level + 1);
+    else{
+        if(mod == 0)
+            answer = ((k % temp) / level) - 1;
+        else
+            answer = ceil(k / (level * pow(10, level - mod)));
     }
-    else if (tmp > n)
-        return;
-
-    cout << answer << endl;
+    
+    return answer;
 }
 
